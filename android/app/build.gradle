@@ -1,0 +1,142 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('typeform_key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.withReader('UTF-8') { reader ->
+        keystoreProperties.load(reader)
+    }
+}
+
+def alias=keystoreProperties.getProperty('typeform.keyAlias')
+def pass=keystoreProperties.getProperty('typeform.keyPassword')
+
+static def getDate() {
+    new Date().format('yyyy.MM.dd.HH.mm')
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+// apply plugin: 'com.google.gms.google-services'
+// apply plugin: 'com.google.firebase.crashlytics'
+// apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+android {
+    namespace "com.demo.typeform"
+    compileSdkVersion 33
+    ndkVersion flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        applicationId "com.demo.typeform"
+        minSdkVersion 23
+        targetSdkVersion 33
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+
+    signingConfigs {
+
+        debug {
+            keyAlias "androiddebugkey"
+            keyPassword "Android"
+            storeFile file("../typeform_debug.keystore")
+            storePassword "Android"
+        }
+
+        release {
+            keyAlias alias
+            keyPassword pass
+            storeFile file("../typeform.jks")
+            storePassword pass
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+            minifyEnabled false
+            shrinkResources false
+            
+        }
+
+        release {
+            signingConfig signingConfigs.release //release_config
+            minifyEnabled true
+            shrinkResources true
+        }
+    }
+
+    flavorDimensions "flavors"
+
+    productFlavors {
+        staging {
+            dimension "flavors"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-stage-${getDate()}"
+            resValue "string", "app_name", "Typeform Dev"
+            resValue "string", "is_debug", "true"
+            
+        }
+        
+        production {
+            dimension "flavors"
+            resValue "string", "app_name", "Typeform"
+            resValue "string", "is_debug", "false"
+            
+        }
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.5.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-crashlytics'
+}

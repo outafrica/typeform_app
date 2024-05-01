@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "433163507154",
+    "project_id": "typeform-604c7",
+    "storage_bucket": "typeform-604c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433163507154:android:8ca0c1ddc7b184a861240b",
+        "android_client_info": {
+          "package_name": "com.demo.typeform"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDquJNZIODg2TnVbFb5aBfJk7hp6YDxts4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433163507154:android:542c3cf3580a408f61240b",
+        "android_client_info": {
+          "package_name": "com.demo.typeform"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDquJNZIODg2TnVbFb5aBfJk7hp6YDxts4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

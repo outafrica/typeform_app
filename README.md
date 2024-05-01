@@ -2,8 +2,6 @@
 
 # Build environment
 
-```
-
 Application supports several build environments: `STAGING, DEVELOPMENT,  PRODUCTION`. You can specify environment by --dart-define flag. Default value is `STAGING`.
 
 We support only two flavors: `staging` & `production`.
